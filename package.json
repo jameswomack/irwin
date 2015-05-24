@@ -1,0 +1,33 @@
+{
+  "name": "irwin",
+  "version": "1.0.0",
+  "description": "A discovery service",
+  "main": "lib/irwin.js",
+  "scripts": {
+    "start": "ponte -c ./conf/mqtt-redis.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jameswomack/irwin.git"
+  },
+  "keywords": [
+    "irwin",
+    "discovery",
+    "mqtt",
+    "http",
+    "ip",
+    "port",
+    "dynamic",
+    "ip"
+  ],
+  "author": "james@womack.io",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jameswomack/irwin/issues"
+  },
+  "homepage": "https://github.com/jameswomack/irwin#readme",
+  "dependencies": {
+    "ponte": "0.0.13"
+  }
+}
