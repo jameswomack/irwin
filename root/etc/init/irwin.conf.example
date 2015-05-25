@@ -1,0 +1,29 @@
+#!upstart
+description "Irwin Discovery Service"
+author      "root"
+
+start on startup
+stop on shutdown
+
+script
+    export HOME="/root"
+    export APP_NAME="irwin"
+    export APP_DIR="$HOME/code/womack.io/$APP_NAME"
+
+    chdir $APP_DIR
+    if [[ ! -e $dir ]]; then
+        mkdir /var/log/$APP_NAME
+    fi
+    echo $$ > /var/run/${APP_NAME}.pid
+    exec sudo -u root U=username P=password /usr/bin/node $APP_DIR/node_modules/.bin/ponte -c $APP_DIR/conf/mqtt-redis.js >> /var/log/$APP_NAME/app.log 2>&1
+end script
+
+pre-start script
+    # Date format same as (new Date()).toISOString() for consistency
+    echo "[`date -u +%Y-%m-%dT%T.%3NZ`] (sys) Starting" >> /var/log/$APP_NAME/sys.log
+end script
+
+pre-stop script
+    rm /var/run/$APP_NAME.pid
+    echo "[`date -u +%Y-%m-%dT%T.%3NZ`] (sys) Stopping" >> /var/log/$APP_NAME/sys.log
+end script

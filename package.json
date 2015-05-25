@@ -4,7 +4,16 @@
   "description": "A discovery service",
   "main": "lib/irwin.js",
   "scripts": {
-    "start": "ponte -c ./conf/mqtt-redis.js",
+    "start": "npm run startPonte",
+    "startPonte": "ponte -c ./conf/mqtt-redis.js",
+    "tailSys": "tail -f /var/log/irwin.sys.log",
+    "bunyanApp": "bunyan /var/log/irwin/app.log",
+    "installClients": "aptitude install mosquitto-clients",
+    "startProd": "start irwin",
+    "stopProd": "stop irwin",
+    "upFind": "initctl list | grep irwin",
+    "upReload": "initctl reload-configuration",
+    "upCheckConf": "init-checkconf /etc/init/irwin.conf",
     "test": "mocha"
   },
   "repository": {
@@ -28,6 +37,10 @@
   },
   "homepage": "https://github.com/jameswomack/irwin#readme",
   "dependencies": {
+    "bunyan": "^1.3.5",
     "ponte": "0.0.13"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5"
   }
 }

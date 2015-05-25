@@ -4,14 +4,24 @@ module.exports = {
     type: "redis",
     host: "localhost"
   },
-  broker: {
-    // same as https://github.com/mcollina/ascoltatori#mqtt 
-    type: "mqtt",
-    port: "2883",
-    host: "womack.io"
+  mqtt: {
+    port: 1883,
+    authenticate: function(client, usernameBuffer, passwordBuffer, callback) {
+      var env = process.env;
+      console.log(env);
+      console.log(usernameBuffer.toString(), env.U, passwordBuffer.toString(), env.P);
+      var error = null;
+      var payload = client;
+      if (!(usernameBuffer.toString() === env.U &&
+          passwordBuffer.toString() === env.P)){
+            error = new Error('Invalid username & password');
+            payload = null;
+      }
+      return callback(error, payload);
+    },
   },
   logger: {
     level: 20,
-    name: "Config Test Logger"
+    name: "irwin"
   }
 };
